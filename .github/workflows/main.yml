@@ -1,0 +1,45 @@
+name: "Roam Research backup"
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+      # Here you can change how often your backup runs. See https://crontab.guru/examples.html
+      - cron: "0 * * * *"
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    name: Backup
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.BACKUP_REPO }}
+          token: ${{ secrets.ACCESS_TOKEN }}
+      
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Run Backup
+        run: |
+          cd /tmp
+          git clone -q https://github.com/everruler12/roam2github.git roam2github
+          cd $_
+          npm i
+          npm run backup -s
+        env:
+          ROAM_EMAIL: ${{ secrets.ROAM_EMAIL }}
+          ROAM_PASSWORD: ${{ secrets.ROAM_PASSWORD }}
+          ROAM_GRAPH: ${{ secrets.ROAM_GRAPH }}
+          BACKUP_EDN: true
+          BACKUP_JSON: true
+          BACKUP_MARKDOWN: true
+
+      - name: Commit Changes
+        uses: everruler12/git-auto-commit-action@latest
+        with:
+          commit_message: Automatic backup
