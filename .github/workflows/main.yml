@@ -50,9 +50,12 @@ jobs:
 
       -   name: Run Image backup
           run: |
-            python scripts/roam_image_backup.py json/${{ secrets.ROAM_GRAPH }}.json images
-            sed -i 's/- #/\n#/g;s/](</](/g;s/.md>)/.md)/g;s/- \([[:digit:]]*\)\./\n\1\./g;s~(https.*%2F\(.*\)\?alt=media.*)~(../images\/\1)~g' ./formatted/**/*.md
-            sed -i 's/- #/\n#/g;s/](</](/g;s/.md>)/.md)/g;s/- \([[:digit:]]*\)\./\n\1\./g;s~(https.*%2F\(.*\)\?alt=media.*)~(../images\/\1)~g' ./formatted/*.md
+            cd roam2github
+            python ../scripts/roam_image_backup.py json/${{ secrets.ROAM_GRAPH }}.json images
+            sed -i 's/- #/\n#/g;s/](</](/g;s/.md>)/.md)/g;s/- \([[:digit:]]*\)\./\n\1\./g;s~(https.*%2F\(.*\)\?alt=media.*)~(../images\/\1)~g' ./markdown/**/*.md
+            sed -i 's/- #/\n#/g;s/](</](/g;s/.md>)/.md)/g;s/- \([[:digit:]]*\)\./\n\1\./g;s~(https.*%2F\(.*\)\?alt=media.*)~(../images\/\1)~g' ./markdown/*.md
+          env:
+            ROAM_GRAPH: ${{ secrets.ROAM_GRAPH }}
 
       - name: Commit Changes
         uses: everruler12/git-auto-commit-action@latest
