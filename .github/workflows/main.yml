@@ -41,7 +41,7 @@ jobs:
           npm i
           npm run backup -s
           curl https://raw.githubusercontent.com/JimmyLv/roam2github-actions/main/scripts/roam_image_backup.py -o roam_image_backup.py
-          mkdir ./markdown/${{ secrets.ROAM_GRAPH }}/images
+          mkdir -p ./markdown/${{ secrets.ROAM_GRAPH }}/images
           python roam_image_backup.py json/${{ secrets.ROAM_GRAPH }}.json ./markdown/${{ secrets.ROAM_GRAPH }}/images
           sed -i 's/- #/\n#/g;s/](</](/g;s/.md>)/.md)/g;s/- \([[:digit:]]*\)\./\n\1\./g;s~(https.*%2F\(.*\)\?alt=media.*)~(./images\/\1)~g' ./markdown/${{ secrets.ROAM_GRAPH }}/*.md
         env:
