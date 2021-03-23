@@ -41,7 +41,7 @@ jobs:
           npm i
           npm run backup -s
           pwd
-          ls
+          ls /home/runner/work
           ls /tmp
           curl https://raw.githubusercontent.com/JimmyLv/roam2github-actions/main/scripts/roam_image_backup.py -o roam_image_backup.py
           mkdir -p ./markdown/${{ secrets.ROAM_GRAPH }}/images
