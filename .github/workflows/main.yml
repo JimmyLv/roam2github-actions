@@ -40,10 +40,7 @@ jobs:
           cd $_
           npm i
           npm run backup -s
-          pwd
-          ls /tmp/roam2github
-          ls /home/runner/work/roam2github-actions
-          tree /home/runner/work/roam2github-actions
+          cd /home/runner/work/roam2github-actions/roam2github-actions
           curl https://raw.githubusercontent.com/JimmyLv/roam2github-actions/main/scripts/roam_image_backup.py -o roam_image_backup.py
           mkdir -p ./markdown/${{ secrets.ROAM_GRAPH }}/images
           python roam_image_backup.py json/${{ secrets.ROAM_GRAPH }}.json ./markdown/${{ secrets.ROAM_GRAPH }}/images
