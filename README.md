@@ -1,6 +1,6 @@
 # roam2github-actions
 
-How to start: https://github.com/signalnerve/roam-backup
+How to start: https://github.com/everruler12/roam2github
 
 > Added image backup script. 增加了图片备份脚本
 
